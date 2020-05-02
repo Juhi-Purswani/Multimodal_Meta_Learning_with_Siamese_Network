@@ -15,6 +15,7 @@ from keras.layers import Activation
 from keras.layers import Input, Lambda, Dense, Dropout, Convolution2D, MaxPooling2D, Flatten
 from keras.models import Sequential, Model
 from keras.optimizers import RMSprop
+from keras.callbacks import EarlyStopping
 
 import features
 import model
@@ -30,6 +31,7 @@ img_a,aud_a,img_b,aud_b,labels = festures.data_generate(train_dir,test_dir)
 opt,model = model.siamese_model(input_img_dim,input_aud_dim)
 
 model.compile(loss=model.contrastive_loss, optimizer=opt)
-
 model.summary()
-model.fit([img_a,aud_a,img_b,aud_b], labels, validation_split=.25,batch_size=1, verbose=2, nb_epoch=epochs)
+
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1)
+model.fit([img_a,aud_a,img_b,aud_b], labels, validation_split=.25,batch_size=1, verbose=2, nb_epoch=epochs, callbacks=[es])
