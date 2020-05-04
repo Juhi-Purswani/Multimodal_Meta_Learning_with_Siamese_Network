@@ -27,7 +27,7 @@ epochs = 30
 input_img_dim = (1,28,28)
 input_aud_dim = (1,1025,47)
 
-img_a,aud_a,img_b,aud_b,labels = festures.data_generate(train_dir,test_dir)
+img_a,aud_a,img_b,aud_b,labels = features.data_generate(train_dir)
 opt,model = model.siamese_model(input_img_dim,input_aud_dim)
 
 model.compile(loss=model.contrastive_loss, optimizer=opt)

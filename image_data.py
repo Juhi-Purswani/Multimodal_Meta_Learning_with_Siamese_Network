@@ -8,7 +8,7 @@ Created on Sat May  2 13:08:47 2020
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-def data:
+def data():
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
     count=[]
     for i in range(0,10):
