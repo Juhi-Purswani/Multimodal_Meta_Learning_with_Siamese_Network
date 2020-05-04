@@ -22,7 +22,7 @@ import model
 
 train_dir = "train"
 test_dir = "test"
-batch size = 64
+batch_size = 64
 epochs = 30
 input_img_dim = (1,28,28)
 input_aud_dim = (1,1025,47)
@@ -34,4 +34,4 @@ model.compile(loss=model.contrastive_loss, optimizer=opt)
 model.summary()
 
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1)
-model.fit([img_a,aud_a,img_b,aud_b], labels, validation_split=.25,batch_size=1, verbose=2, nb_epoch=epochs, callbacks=[es])
+model.fit([img_a,aud_a,img_b,aud_b], labels, validation_split=.25,batch_size=batch_size, verbose=2, nb_epoch=epochs, callbacks=[es])
