@@ -35,10 +35,10 @@ def siamese_network(input_dim_img,input_dim_aud):
     feat_aud_a = aud_network(aud_a)
     feat_aud_b = aud_network(aud_b)
     
-    concat_a = Concatenate(axis=3)([feat_img_a, feat_aud_a])
-    concat_b = Concatenate(axis=3)([feat_img_b, feat_aud_b])
+    concat_a = Concatenate(axis=2)([feat_img_a, feat_aud_a])
+    concat_b = Concatenate(axis=2)([feat_img_b, feat_aud_b])
     
-    input_dim = (1,64,389)
+    input_dim = (27,37,32)
     base_network = fusion.multi_modal_network(input_dim)
     feat_vecs_a = base_network(concat_a)
     feat_vecs_b = base_network(concat_b)
@@ -46,7 +46,7 @@ def siamese_network(input_dim_img,input_dim_aud):
     distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([feat_vecs_a ,feat_vecs_b])
     
     rms = RMSprop()
-    model = Model(input=[img_a, aud_a, img_b,aud_b], output=distance)
+    model = Model(inputs=[img_a, aud_a, img_b,aud_b], outputs=distance)
     return rms,model
 
 def euclidean_distance(vects):
