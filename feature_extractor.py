@@ -19,29 +19,29 @@ from keras.optimizers import RMSprop
 import tensorflow as tf
 
 def image_feat_network(input_shape):
-    seq = Sequential()
-    seq.add(Convolution2D(32, 3, 3, input_shape=input_shape,
-                          border_mode='valid', dim_ordering='th'))
-    seq.add(Activation('relu'))
-    seq.add(MaxPooling2D(pool_size=(2, 2)))  
-    seq.add(Dropout(.25))
-    seq.add(Convolution2D(64, 3, 3, border_mode='valid', dim_ordering='th'))
-    seq.add(Activation('relu'))
-    seq.add(MaxPooling2D(pool_size=(2, 2), dim_ordering='th')) 
-    seq.add(Dropout(.25))
-    seq.add(Reshape((1,64, 60)))
-    return seq
+   seq = Sequential()
+   seq.add(Convolution2D(32, kernel_size=(3,3), input_shape=(56,56,1)))
+   seq.add(Activation('relu'))
+   seq.add(MaxPooling2D(pool_size=(2, 2)))
+   seq.add(Dropout(.25))
+   return seq
 
 def audio_feat_network(input_shape):
     seq = Sequential()
-    seq.add(Convolution2D(64, 39, 9, input_shape=input_shape,
-                          border_mode='valid', dim_ordering='th'))
+    seq.add(Convolution2D(32, kernel_size=(3,3), input_shape=(1025,47,1)))
     seq.add(Activation('relu'))
-    seq.add(MaxPooling2D(pool_size=(1, 3)))  
+    seq.add(MaxPooling2D(pool_size=(4, 2)))
     seq.add(Dropout(.25))
-    seq.add(Convolution2D(64, 1, 10, border_mode='valid', dim_ordering='th'))
+    seq.add(Convolution2D(32, kernel_size=(3,3)))
     seq.add(Activation('relu'))
-    seq.add(MaxPooling2D(pool_size=(1, 28), dim_ordering='th')) 
-    seq.add(Dropout(.25))
-    seq.add(Reshape((1,64, 329)))
+    seq.add(MaxPooling2D(pool_size=(4, 2)))
+    seq.add(Convolution2D(32, kernel_size=(4,1)))
+    seq.add(Activation('relu'))
+    seq.add(MaxPooling2D(pool_size=(1, 1)))
+    seq.add(Convolution2D(32, kernel_size=(4,1)))
+    seq.add(Activation('relu'))
+    seq.add(MaxPooling2D(pool_size=(1, 1)))
+    seq.add(Convolution2D(32, kernel_size=(3,1)))
+    seq.add(Activation('relu'))
+    seq.add(MaxPooling2D(pool_size=(2, 1)))
     return seq
