@@ -24,8 +24,8 @@ train_dir = "train"
 test_dir = "test"
 batch_size = 64
 epochs = 30
-input_img_dim = (1,28,28)
-input_aud_dim = (1,1025,47)
+input_dim_img = (56,56,1)
+input_dim_aud = (1025, 47,1)
 
 img_a,aud_a,img_b,aud_b,labels = features.data_generate(train_dir)
 opt,model = model.siamese_model(input_img_dim,input_aud_dim)
